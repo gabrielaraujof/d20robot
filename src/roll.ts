@@ -21,7 +21,7 @@ export function roll(ctx: ContextCommandUpdate, next?: () => any) {
         replyWithMarkdown(replyText);
     } catch (e) {
         log('Error:', e);
-        reply("Oh no! This one I can't understand :pensive:");
+        reply("Oh no! This one I can't understand 😔");
     }
     return next();
 }
