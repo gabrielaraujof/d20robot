@@ -1,13 +1,12 @@
-import { DiceRoller } from 'rpg-dice-roller/lib/umd/bundle';
+import { DiceRoller, DiceRoll } from 'rpg-dice-roller/lib/umd/bundle';
 
 import { ContextCommandUpdate } from './command';
 import { log } from './logger';
 
-const roller = new DiceRoller();
 
-function executeRoll(rollCommand) {
-    roller.clearLog();
-    return roller.roll(rollCommand || 'd20');
+function executeRoll(rollCommand): DiceRoll {
+    const roller = new DiceRoller();
+    return roller.roll(rollCommand || 'd20') as DiceRoll;
 }
 
 export function roll(ctx: ContextCommandUpdate, next?: () => any) {
