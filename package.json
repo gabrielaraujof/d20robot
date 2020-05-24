@@ -32,12 +32,10 @@
   "homepage": "https://github.com/gabrielaraujof/d20robot#readme",
   "dependencies": {
     "dotenv": "^8.2.0",
-    "express": "^4.17.1",
     "rpg-dice-roller": "^4.0.2",
     "telegraf": "^3.37.0"
   },
   "devDependencies": {
-    "@types/express": "^4.17.6",
     "@types/jest": "^25.2.3",
     "@types/node": "^13.11.1",
     "jest": "^26.0.1",
