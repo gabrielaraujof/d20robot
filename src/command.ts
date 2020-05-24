@@ -1,7 +1,7 @@
-import { ContextMessageUpdate } from 'telegraf';
+import { TelegrafContext } from 'telegraf/typings/context';
 import { log } from './logger';
 
-export interface ContextCommandUpdate extends ContextMessageUpdate {
+export interface ContextCommandUpdate extends TelegrafContext {
     command: string;
 }
 
