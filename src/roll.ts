@@ -1,26 +1,23 @@
-import { DiceRoller, DiceRoll } from 'rpg-dice-roller/lib/umd/bundle';
+import { TelegrafContext } from 'telegraf/typings/context';
+import { DiceRoll } from 'rpg-dice-roller/lib/umd/bundle';
 
-import { ContextCommandUpdate } from './command';
 import { log } from './logger';
+import { tokenize } from './command';
 
 
-function executeRoll(rollCommand): DiceRoll {
-    const roller = new DiceRoller();
-    return roller.roll(rollCommand || 'd20') as DiceRoll;
-}
-
-export function roll(ctx: ContextCommandUpdate, next?: () => any) {
-    const { command, replyWithMarkdown, reply } = ctx;
+export function roll(ctx: TelegrafContext, next?: () => any) {
+    const { message, replyWithMarkdown, reply } = ctx;
     try {
-        const diceRoll = executeRoll(command);
+        const { exp, text } = tokenize(message.text);
+        const diceRoll = new DiceRoll(exp);
         const [, diceRollResult] = diceRoll.output.split(/:\s+/);
         const [dices, total] = diceRollResult.split(/\s+=\s+/);
-        const replyText = `_${dices} =_ *${total}*`;
-        log('Replying with: ', replyText);
+        const replyMessageRoll = text ? `*${text}*` : `Rolling ${exp}`;
+        const replyText = `${replyMessageRoll}\n_${exp}: ${dices}_\nTotal: *${total}*`;
         replyWithMarkdown(replyText);
     } catch (e) {
-        log('Error:', e);
         reply("Oh no! This one I can't understand 😔");
+        log('Error:', e);
     }
     return next();
 }

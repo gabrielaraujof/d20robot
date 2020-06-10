@@ -1,15 +1,6 @@
-import { TelegrafContext } from 'telegraf/typings/context';
-import { log } from './logger';
+const COMMAND_REGEX = /^\/(?:r|roll)\s+(\d*d\d+)?\s*/;
 
-export interface ContextCommandUpdate extends TelegrafContext {
-    command: string;
-}
-
-export function extractCommand(ctx: ContextCommandUpdate, next?: () => any) {
-    const text = ctx.update.message?.text || '';
-    log('Input text:', text);
-    const [, textCommand] = text.split(new RegExp('[ ]+'), 2);
-    ctx.command = textCommand;
-    log('Command:', textCommand);
-    next();
+export function tokenize(message: string) {
+    const [, exp, text] = message.split(COMMAND_REGEX);
+    return { exp: exp || '1d20', text };
 }
