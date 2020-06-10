@@ -5,8 +5,6 @@ import Telegraf from 'telegraf';
 import dotenv from 'dotenv';
 
 import { roll } from './roll';
-import { extractCommand } from './command';
-
 dotenv.config();
 
 const TOKEN = process.env.TOKEN || '';
@@ -18,7 +16,7 @@ const SECRET = crypto.randomBytes(64).toString('hex');
 
 const bot = new Telegraf(TOKEN);
 
-bot.command([`roll@${USERNAME}`, 'roll'], extractCommand, roll);
+bot.command([`roll@${USERNAME}`, `r@${USERNAME}`, 'roll', 'r'], roll);
 
 bot.telegram.setWebhook(`${DOMAIN}/${SECRET}`);
 bot.startWebhook(`/${SECRET}`, null, PORT);
