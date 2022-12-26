@@ -1,0 +1,24 @@
+service: serverless-example
+
+useDotenv: true
+
+plugins:
+  - serverless-offline
+
+package:
+  excludeDevDependencies: true
+
+provider:
+  name: aws
+  runtime: nodejs16.x
+
+functions:
+  main:
+    handler: dist/main.handler
+    events:
+      - http:
+          method: ANY
+          path: /
+      - http:
+          method: ANY
+          path: '{proxy+}'
